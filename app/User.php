@@ -2,7 +2,7 @@
 
 namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use App\models\users_pictures;
 class User extends Authenticatable
 {
     /**
@@ -11,7 +11,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','email','role_id', 'is_activ', 'password',
+        'name','email','role_id', 'is_activ', 'password', 'photo_id',
     ];
 
     /**
@@ -34,5 +34,10 @@ class User extends Authenticatable
     public function getRole()
     {
             return $this->role;
+    }
+
+    public function photo(){
+
+        return $this ->belongsTo('App\models\users_pictures');
     }
 }
