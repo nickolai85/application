@@ -11,16 +11,25 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
-Route::resource('/admin/users','admin\UsersController');
-route::get('/admin', function(){
+Route::get('/', 'IndexController@index');
 
-	return view('admin.index');
+Route::get('/home', 'HomeController@index');
+
+
+
+
+Route::group(['middleware'=>'admin'], function (){
+
+    Route::resource('admin/users', 'admin\UsersController');
+    Route::resource('admin/posts', 'admin\PostController');
 
 });
+
+
+
