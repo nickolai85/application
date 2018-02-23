@@ -1,4 +1,8 @@
 
 public/images/
+public/storage/
 node_modules/
 vendor/
+Homestead.yaml
+Homestead.json
+.env

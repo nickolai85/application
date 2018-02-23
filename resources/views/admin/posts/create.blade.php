@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
         {!! Form::label('body', 'Description:')!!}
-        {!! Form::textarea('body',null,['class'=>'form-controll','rows'=>3]) !!}
+        {!! Form::textarea('body',null,['class'=>'form-control my-editor','rows'=>3]) !!}
     </div>
 	<div class="form-group">
 	    {!! Form::submit('Create', ['class'=>'btn btn-primary']) !!}
@@ -32,4 +32,12 @@
     <div class="row">
         @include('includes.form_errors')
     </div>
+    {{--TinyMCE4 editor --}}
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="{{asset('js/addedlibs.js')}}"></script>
+
+
+
+
+
 @stop

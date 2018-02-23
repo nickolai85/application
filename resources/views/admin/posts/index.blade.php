@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @if(Session::has('deleted_user'))
+    @if(Session::has('deleted_post'))
         <p class="bg-danger">{{session('deleted_posts')}}</p>
     @endif
     <h1> Posts  </h1>
@@ -32,7 +32,9 @@
                     <td><img height="50" src="{{$post->photo ? $post->photo->file : 'http://placehold.it/400x400'}}" alt=""></td>
                     <td>{{$post->title}}</td>
                     <td>
-                        {{$post->body}}
+                        {!! \Illuminate\Support\Str::words($post->body, 10,'...')  !!}
+
+
                     </td>
                     <td>{{$post->created_at->diffForHumans()}}</td>
                     <td>{{$post->updated_at->diffForHumans()}}</td>

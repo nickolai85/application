@@ -19,8 +19,14 @@ class CreatePostsTable extends Migration
             $table->integer('category_id')->unsigned()->index();
             $table->integer('photo_id')->unsiged()->index();
             $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('sub_title', 500);
             $table->text('body');
             $table->timestamps();
+
+
+            //to remove All the rows wich belongs to user wich is removing
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

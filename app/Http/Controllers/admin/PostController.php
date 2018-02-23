@@ -10,7 +10,8 @@ use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 class PostController extends Controller
 {
     /**
@@ -105,7 +106,23 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $post = Post::findOrFail($id);
+        $input= $request->all();
+
+        if ($file =$request->file('photo_id')){
+            $name=time().$file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['file'=>$name]);
+
+            $input['photo_id']=$photo->id;
+
+        }
+
+        $post->update($input);
         //
+        return redirect('/admin/posts');
     }
 
     /**
@@ -116,6 +133,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post=Post::findOrFail($id);
+
+        if ($post->photo_id){
+
+            unlink(public_path().$post->photo->file);
+            Photo::findOrFail($post->photo_id)->delete();
+        }
+        $post->delete();
+        Session::flash('deleted_post', 'The user has been deleted');
+
+        return redirect('/admin/posts');
     }
 }
